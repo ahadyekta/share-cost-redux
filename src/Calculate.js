@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+import './assets/css/App.css';
+import {connect} from 'react-redux'
 
 class Calculate extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      members : localStorage.members ? JSON.parse(localStorage.members) : [],
-      expenses: localStorage.expenses ? JSON.parse(localStorage.expenses) : [],
       result : {}
     }
 
@@ -18,11 +17,11 @@ class Calculate extends Component {
   }
   compute = () => {
     let finalArray = {}
-    this.state.members.map((name,i) => {
+    this.props.members.map((name,i) => {
       finalArray[name] = 0
     })
    
-    this.state.expenses.map((row,i) => {
+    this.props.expenses.map((row,i) => {
       row.amount = parseInt(row.amount)
       finalArray[row.payer]= finalArray[row.payer] + row.amount //first add the payer amount
       row.receivers.map((receiver,i) => {
@@ -37,8 +36,6 @@ class Calculate extends Component {
     this.total = Math.round(total)
 
     this.setState({
-      expenses : this.state.expenses,
-      members : this.state.members,
       result : finalArray
     });  
   }// make an array of members with their numbers
@@ -56,23 +53,7 @@ class Calculate extends Component {
     }
   }
 
-  offer(){
-    let gainer = [
-      {'name':'gainer1', 'amount':4000},
-      {'name':'gainer2', 'amount':483.33},
-    ]
-    let payer = [
-      {'name':'payer1', 'amount':2400},
-      {'name':'payer2', 'amount':2083.33},
-    ]
 
-    let result = [
-      {'payer':'x','gainer':'y','amount':'z'}
-    ]
-
-
-
-  }
   render() {
     return (
       <div className="App">
@@ -116,4 +97,15 @@ class Calculate extends Component {
   }
 }
 
-export default Calculate;
+const mapStateToProps= state => ({
+    members : state.members,
+    expenses: state.expenses
+})
+
+const mapDispatchToProps= dispatch => ({
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Calculate)

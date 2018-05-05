@@ -12,7 +12,7 @@ class AddMem extends Component {
             this._name.value=''
             return;
         }
-        this.props.dispatch(addPerson(this._name.value))
+        this.props.addMember(this._name.value)
         this._name.value=''
 
     }// add a member to local storage
@@ -32,5 +32,16 @@ class AddMem extends Component {
         );
     }
 }
+const mapStateToProps= state => ({
+    members : state.members,
+    expenses: state.expenses
+})
 
-export default connect()(AddMem);
+const mapDispatchToProps= dispatch => ({
+    addMember : name => dispatch(addPerson(name))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddMem)

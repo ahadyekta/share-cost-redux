@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Grid,Col,Row} from "react-bootstrap"
-
+import {addExp} from "../actions/index";
+import {connect} from 'react-redux'
 
 class AddExp extends Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class AddExp extends Component {
 
   resetForm= () => {
     this._amount.value = ''
-    this.state.receiver = Object.assign([],this.props.members),
+    this.setState({
+          receiver : Object.assign([],this.props.members)
+    })
     this._payer.value = Object.assign([],this.props.members)[0]
   }
   resetFormClick = (e) => {
@@ -21,10 +24,10 @@ class AddExp extends Component {
   }
   addExpense = (e) => {
     e.preventDefault()
-    this.props.onNewExpense({
-      payer : this._payer.value,
-      amount : this._amount.value,
-      receivers : this.state.receiver
+    this.props.addExpense({
+        payer : this._payer.value,
+        amount : this._amount.value,
+        receivers : this.state.receiver
     })
     this.resetForm()
   }// add a expense to local storage
@@ -41,6 +44,7 @@ class AddExp extends Component {
   render() {
     return (
       <div className="add-exp">
+          {this.props.members.length > 1 ?
         <form className="receiver-add" onSubmit={this.addExpense}>
           <Grid>
             <Row>
@@ -90,9 +94,22 @@ class AddExp extends Component {
           </div>
 
           </form>
+              :  "First enter at least two people"}
       </div>
     );
   }
 }
+const mapStateToProps= state => ({
+    members : state.members,
+    expenses: state.expenses
+})
 
-export default AddExp;
+const mapDispatchToProps= dispatch => ({
+    addExpense : input => dispatch(addExp(input))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddExp)
+

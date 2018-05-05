@@ -9,13 +9,11 @@ class Members extends Component {
                 <div className="header">
                     <h1>People</h1>
                 </div>
-                <!--list-->
                 <VisibleMemList />
-                <!--add-->
                 <AddMem/>
             </div>
         );
     }
 }
 
-export default App;
+export default Members;
