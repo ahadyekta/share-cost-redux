@@ -51,34 +51,7 @@ class Expenses extends Component {
            {this.state.members.length > 1 ? <AddExp members={this.state.members} onNewExpense={this.newExpense} /> :  "First enter at least two people"}
           </div>
           <br/>
-          <div className="list-sec">
-          <table className="expense-box table">
-                      <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Payer</th>
-                        <th>Amount</th>
-                        <th>Receiver</th>
-                        <th>Delete</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-
-
-           {this.state.expenses.map((row,i)=>{
-             return (
-                          <tr key={i}>
-                              <td>{i+1}</td>
-                              <td>{row.payer}</td>
-                              <td>{row.amount}</td>
-                              <td>{row.receivers.join(', ')}</td>
-                              <td><a href="#" onClick={(e) => this.deleteExpense(i,e)}>X</a></td>
-                          </tr>
-             )
-           })}
-            </tbody>
-            </table>
-          </div>
+          /* list was here */
           <br />
           <div className="calculate">
               <Link to="/calculate" className="btn btn-success">Calculate</Link>
