@@ -7,12 +7,18 @@ import Expenses from './components/Expenses';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Calculate from './Calculate';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
+import {createLogger} from 'redux-logger'
 
-const store = createStore(rootReducer)
-
+const loggerMiddleware = createLogger()
+const store = createStore(
+    rootReducer,
+    applyMiddleware(
+        loggerMiddleware // neat middleware that logs actions
+    )
+)
 ReactDOM.render(
     <Provider store={store}>
         <Router>

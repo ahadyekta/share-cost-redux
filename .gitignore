@@ -6,8 +6,6 @@
 # testing
 /coverage
 
-.vscode
-
 # misc
 .DS_Store
 .env.local
@@ -20,3 +18,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode
+.idea
